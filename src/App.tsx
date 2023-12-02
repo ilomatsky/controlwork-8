@@ -3,6 +3,7 @@ import All from './components/All/All';
 import Sidebar from './components/Sidebar/Sidebar';
 import Form from './components/Form/Form';
 import Navbar from './components/Navbar/Navbar';
+import QuoteDetail from './components/QuoteDetail/QuoteDetail';
 import './App.css';
 
 const App = () => (
@@ -20,7 +21,8 @@ const App = () => (
           <Route path="quotes/humour" element={<All/>}/>
           <Route path="quotes/motivational" element={<All/>}/>
           <Route path="quotes/form" element={<Form/>}/>
-          <Route path="quotes/:id/form" element={<Form/>}/>
+          <Route path="quotes/:id" element={<QuoteDetail/>}/>
+          <Route path="quotes/:id/edit" element={<Form/>}/>
         </Routes>
       </div>
     </Router>

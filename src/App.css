@@ -65,6 +65,10 @@
   margin-bottom: 8px;
 }
 
+.add-quote-select {
+  cursor: pointer;
+}
+
 .add-quote-select,
 .add-quote-input,
 .add-quote-textarea {

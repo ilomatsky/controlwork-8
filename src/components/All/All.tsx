@@ -14,7 +14,7 @@ interface AllState {
 }
 
 const All = () => {
-  const [state, setState] = useState<AllState>({
+  const [quotes, setQuotes] = useState<AllState>({
     posts: [],
     error: null,
   });
@@ -29,46 +29,60 @@ const All = () => {
 
         if (paramsId) {
           response = await axiosAPI.get<{ [key: string]: Post }>(`quotes.json?orderBy="category"&equalTo=${paramsId}`);
+            if (response.data) {
+                const fetchedPosts: Post[] = Object.entries(response.data).map(([id, data]) => ({
+                    id,
+                    ...data,
+                }));
+                setQuotes(fetchedPosts);
+            }
         } else {
           response = await axiosAPI.get<{ [key: string]: Post }>('quotes.json');
+            if (response.data) {
+                const fetchedPosts: Post[] = Object.entries(response.data).map(([id, data]) => ({
+                    id,
+                    ...data,
+                }));
+                setQuotes(fetchedPosts);
+            }
         }
 
         if (response.data) {
           const fetchedPosts = Object.values(response.data);
-          setState({posts: fetchedPosts, error: null});
+            setQuotes({posts: fetchedPosts, error: null});
         } else {
           console.error('No data found.');
-          setState({posts: [], error: 'No data found.'});
+            setQuotes({posts: [], error: 'No data found.'});
         }
       } catch (error) {
         console.error('Error fetching posts:', error);
         const errorMessage = error instanceof Error ? error.message : 'Error fetching posts.';
-        setState({posts: [], error: errorMessage});
+          setQuotes({posts: [], error: errorMessage});
       }
     };
 
     fetchPosts();
   }, [paramsId]);
 
-  const {posts, error} = state;
+  const {posts, error} = quotes;
 
   if (error) {
-    return <div>Error: {error}</div>;
+    return <div className="content">Error: {error}</div>;
   }
 
   return (
     <div className="content">
       <h2>All Posts</h2>
       <ul>
-        {posts.map((post) => (
-          <li className="quotes" key={post.id}>
-            <h3>{post.author}</h3>
-            <p>{post.text}</p>
-            <Link to={`quotes/${post.id}/form`}>
-              <button>Edit</button>
-            </Link>
-          </li>
-        ))}
+          {posts.map((post) => (
+              <li className="quotes" key={post.id}>
+                  <h3>{post.author}</h3>
+                  <p>{post.text}</p>
+                  <Link to={`quotes/${post.id}`}>
+                      <button onClick={() => console.log('post.id:', post.id)}>Edit</button>
+                  </Link>
+              </li>
+          ))}
       </ul>
     </div>
   );

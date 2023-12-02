@@ -3,11 +3,11 @@ import {useParams, useNavigate} from 'react-router-dom';
 import axiosAPI from '../../axiosAPI';
 
 const categories = [
-  {title: 'Star Wars', id: 'star-wars'},
-  {title: 'Famous people', id: 'famous-people'},
-  {title: 'Saying', id: 'saying'},
-  {title: 'Humour', id: 'humour'},
-  {title: 'Motivational', id: 'motivational'},
+  {title: 'Star Wars', category: 'star-wars'},
+  {title: 'Famous people', category: 'famous-people'},
+  {title: 'Saying', category: 'saying'},
+  {title: 'Humour', category: 'humour'},
+  {title: 'Motivational', category: 'motivational'},
 ];
 
 const PostForm = () => {
@@ -46,7 +46,7 @@ const PostForm = () => {
       if (id) {
         await axiosAPI.put(`quotes/${id}.json`, postData);
         console.log('Quote updated successfully');
-        navigate(`quotes/${id}`);
+        navigate(`/`);
       } else {
         await axiosAPI.post('quotes.json', {...postData, category});
         console.log('Quote added successfully');
@@ -66,7 +66,7 @@ const PostForm = () => {
           <select value={category} onChange={(e) => setCategory(e.target.value)} className="add-quote-select">
             <option value="" disabled>Select a category</option>
             {categories.map((cat) => (
-              <option key={cat.id} value={cat.id}>
+              <option key={cat.category} value={cat.category}>
                 {cat.title}
               </option>
             ))}
