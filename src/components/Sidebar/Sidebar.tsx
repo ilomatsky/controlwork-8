@@ -11,10 +11,10 @@ const Sidebar = () => {
   ];
 
   return (
-    <nav>
+    <div className="sidebar">
       <ul>
         {categories.map((category) => (
-          <li key={category.id}>
+          <li className="sidebar-link" key={category.id}>
             <Link to={`/quotes.json?orderBy="category"&equalTo="${category.id}"`}
                   className={location.pathname === `/quotes/${category.id}` ? 'active' : ''}>
               {category.title}
@@ -22,7 +22,7 @@ const Sidebar = () => {
           </li>
         ))}
       </ul>
-    </nav>
+    </div>
   );
 };
 

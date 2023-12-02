@@ -61,7 +61,7 @@ const All = () => {
       <h2>All Posts</h2>
       <ul>
         {posts.map((post) => (
-          <li key={post.id}>
+          <li className="quotes" key={post.id}>
             <h3>{post.author}</h3>
             <p>{post.text}</p>
             <Link to={`quotes/${post.id}/form`}>
