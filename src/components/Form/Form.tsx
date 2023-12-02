@@ -48,7 +48,7 @@ const PostForm = () => {
         console.log('Quote updated successfully');
         navigate(`/quotes/${id}`);
       } else {
-        await axiosAPI.post('/quotes.json', postData);
+        await axiosAPI.post('/quotes.json', {...postData, category});
         console.log('Quote added successfully');
         navigate('/');
       }

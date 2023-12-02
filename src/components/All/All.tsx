@@ -25,7 +25,7 @@ const All = () => {
   }, []);
 
   return (
-    <div>
+    <div className="content">
       <h2>All Posts</h2>
       <ul>
         {posts.map((post) => (
