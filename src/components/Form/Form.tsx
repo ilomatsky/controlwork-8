@@ -64,6 +64,7 @@ const PostForm = () => {
         <label className="add-quote-label">
           Category:
           <select value={category} onChange={(e) => setCategory(e.target.value)} className="add-quote-select">
+            <option value="" disabled>Select a category</option>
             {categories.map((cat) => (
               <option key={cat.id} value={cat.id}>
                 {cat.title}

@@ -44,7 +44,8 @@ const All = () => {
         }
       } catch (error) {
         console.error('Error fetching posts:', error);
-        setState({posts: [], error: error.message || 'Error fetching posts.'});
+        const errorMessage = error instanceof Error ? error.message : 'Error fetching posts.';
+        setState({posts: [], error: errorMessage});
       }
     };
 
@@ -58,7 +59,7 @@ const All = () => {
   }
 
   return (
-    <div>
+    <div className="content">
       <h2>All Posts</h2>
       <ul>
         {posts.map((post) => (
