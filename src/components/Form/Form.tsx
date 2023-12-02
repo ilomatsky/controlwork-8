@@ -21,7 +21,7 @@ const PostForm = () => {
     const fetchPostDetails = async () => {
       try {
         if (id) {
-          const response = await axiosAPI.get(`/quotes/${id}.json`);
+          const response = await axiosAPI.get(`quotes/${id}.json`);
           if (response.data) {
             const {category, author, text} = response.data;
             setCategory(category);
@@ -44,11 +44,11 @@ const PostForm = () => {
       const postData = {category, author, text};
 
       if (id) {
-        await axiosAPI.put(`/quotes/${id}.json`, postData);
+        await axiosAPI.put(`quotes/${id}.json`, postData);
         console.log('Quote updated successfully');
-        navigate(`/quotes/${id}`);
+        navigate(`quotes/${id}`);
       } else {
-        await axiosAPI.post('/quotes.json', {...postData, category});
+        await axiosAPI.post('quotes.json', {...postData, category});
         console.log('Quote added successfully');
         navigate('/');
       }

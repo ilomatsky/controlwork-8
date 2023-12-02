@@ -1,4 +1,5 @@
-import {useState, useEffect} from 'react';
+import {useEffect, useState} from 'react';
+import {useLocation} from 'react-router-dom';
 import axiosAPI from '../../axiosAPI';
 
 interface Post {
@@ -7,25 +8,57 @@ interface Post {
   text: string;
 }
 
+interface AllState {
+  posts: Post[];
+  error: string | null;
+}
+
 const All = () => {
-  const [posts, setPosts] = useState<Post[]>([]);
+  const [state, setState] = useState<AllState>({
+    posts: [],
+    error: null,
+  });
+  const location = useLocation();
+  const queryParams = new URLSearchParams(location.search);
+  const paramsId = queryParams.get('equalTo') || '';
 
   useEffect(() => {
     const fetchPosts = async () => {
       try {
-        const response = await axiosAPI.get<{ [key: string]: Post }>('/quotes.json');
-        const fetchedPosts = Object.values(response.data);
-        setPosts(fetchedPosts);
+        let response;
+
+        if (paramsId) {
+          response = await axiosAPI.get<{ [key: string]: Post }>(
+            `quotes.json?orderBy="category"&equalTo=${paramsId}`,
+          );
+        } else {
+          response = await axiosAPI.get<{ [key: string]: Post }>('quotes.json');
+        }
+
+        if (response.data) {
+          const fetchedPosts = Object.values(response.data);
+          setState({posts: fetchedPosts, error: null});
+        } else {
+          console.error('No data found.');
+          setState({posts: [], error: 'No data found.'});
+        }
       } catch (error) {
         console.error('Error fetching posts:', error);
+        setState({posts: [], error: error.message || 'Error fetching posts.'});
       }
     };
 
     fetchPosts();
-  }, []);
+  }, [paramsId]);
+
+  const {posts, error} = state;
+
+  if (error) {
+    return <div>Error: {error}</div>;
+  }
 
   return (
-    <div className="content">
+    <div>
       <h2>All Posts</h2>
       <ul>
         {posts.map((post) => (
