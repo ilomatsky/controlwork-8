@@ -1,11 +1,14 @@
 import Sidebar from './components/Sidebar/Sidebar';
 import {BrowserRouter as Router, Routes, Route} from 'react-router-dom';
 import All from './components/All/All';
+import Navbar from './components/Navbar/Navbar';
+import Form from './components/Form/Form';
 import './App.css';
 
 const App = () => (
   <>
     <Router>
+      <Navbar/>
       <Sidebar/>
       <Routes>
         <Route path="/" element={<All/>}/>
@@ -14,6 +17,7 @@ const App = () => (
         <Route path="quotes/saying" element={<All/>}/>
         <Route path="quotes/humour" element={<All/>}/>
         <Route path="quotes/motivational" element={<All/>}/>
+        <Route path="quotes/form" element={<Form/>}/>
       </Routes>
     </Router>
   </>
