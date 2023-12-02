@@ -1,5 +1,5 @@
 import {useEffect, useState} from 'react';
-import {useLocation} from 'react-router-dom';
+import {useLocation, Link} from 'react-router-dom';
 import axiosAPI from '../../axiosAPI';
 
 interface Post {
@@ -28,9 +28,7 @@ const All = () => {
         let response;
 
         if (paramsId) {
-          response = await axiosAPI.get<{ [key: string]: Post }>(
-            `quotes.json?orderBy="category"&equalTo=${paramsId}`,
-          );
+          response = await axiosAPI.get<{ [key: string]: Post }>(`quotes.json?orderBy="category"&equalTo=${paramsId}`);
         } else {
           response = await axiosAPI.get<{ [key: string]: Post }>('quotes.json');
         }
@@ -66,6 +64,9 @@ const All = () => {
           <li key={post.id}>
             <h3>{post.author}</h3>
             <p>{post.text}</p>
+            <Link to={`quotes/${post.id}/form`}>
+              <button>Edit</button>
+            </Link>
           </li>
         ))}
       </ul>
